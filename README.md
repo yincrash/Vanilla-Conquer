@@ -91,6 +91,16 @@ This will build Vanilla Conquer executables in the build directory.
 
 To create a portable bundle for macOS we run [macdylibbundler](https://github.com/auriamg/macdylibbundler) in our CI builds as an extra step to add the SDL2 and OpenAL libraries to the bundle. If you wish to create a portable bundle yourself, you will need to do this step manually as CMake will not currently do it for you.
 
+By default, the build creates Universal binaries, but that requires both ARM and x64 libraries, which MacPort supports, but Homebrew does not. If you'd like to build for a single platform, you can adjust your `cmake` call to request only one architecture.
+
+```sh
+cmake -B build -DARM_ONLY=ON .
+```
+or
+```sh
+cmake -B build -DX64_ONLY=ON .
+```
+
 ### Icons
 
 CMake will attempt to generate icons in an appropriate format for Windows and macOS if ImageMagick is found in the system PATH. Otherwise you will end up with generic "program" icons.

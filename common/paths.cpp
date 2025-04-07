@@ -108,4 +108,14 @@ void PathsClass::Init(const char* suffix, const char* ini_name, const char* data
 
     DBG_INFO("Read only data directory is set to '%s'", DataPath.c_str());
     DBG_INFO("Read/Write user data directory is set to '%s'", UserPath.c_str());
+
+    // Check to see if the bootstrap MIX files exist
+    if (access((DataPath + "/CCLOCAL.MIX").c_str(), F_OK) == -1 && 
+        access((DataPath + "/DEMOL.MIX").c_str(), F_OK) == -1 &&
+        access((UserPath + "/CCLOCAL.MIX").c_str(), F_OK) == -1 && 
+        access((UserPath + "/DEMOL.MIX").c_str(), F_OK) == -1) {
+        // TODO: move this to paths_win and paths_posix for safety
+        DBG_INFO("Warning: Required .MIX files (CCLOCAL.MIX or DEMOL.MIX) are missing from the data directory.");
+        // TOOD: ask the user if they have a CD/ISO to install the required files.
+    }
 }
